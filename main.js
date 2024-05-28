@@ -252,9 +252,9 @@ io.on('connection', (socket) => {
         let crowdData = {};
         if (fs.existsSync(filePath)) {
             crowdData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            crowdData[data.areaId] = data.count;
+            fs.writeFileSync(filePath, JSON.stringify(crowdData, null, 2), 'utf8');
         }
-        crowdData[data.areaId] = data.result;
-        fs.writeFileSync(filePath, JSON.stringify(crowdData, null, 2), 'utf8');
 
 
         //다음 이미지 전송
