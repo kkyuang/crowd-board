@@ -204,6 +204,7 @@ app.post('/upload-map/:mapId', svgupload.single('mapFile'), (req, res) => {
 // 맵 SVG 파일 업로드
 app.post('/crowd-photo/:mapId', imgupload.single('mapFile'), (req, res) => {
     const mapId = req.params.mapId;
+    console.log(res)
     res.send(`맵 SVG 파일이 성공적으로 업로드되었습니다. <a href="/map/${mapId}">맵으로 돌아가기</a>`);
 });
 
