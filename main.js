@@ -60,7 +60,8 @@ const imgstorage = multer.diskStorage({
     filename: (req, file, cb) => {
         const areaId = req.params.areaId;
         cb(null, areaId + '.jpg');
-    }
+    },
+    limits: { fileSize: 10 * 1024 * 1024 } 
 });
 
 const svgupload = multer({ storage: svgstorage });
@@ -231,10 +232,10 @@ io.on('connection', (socket) => {
 
     // Read the image file and send it to the client
     areas = require('data/경남과학고/crowdData.json');
-    //imgDatas = [] Buffer.from(data).toString('base64');
+    imgDatas = [] 
     
     for(var i = 0; i < Object.keys(areas).length; i++){
-        
+        imgDatas[i] = fs.readFileSync(imagePath)
     }
 
     const imagePath = path.join(__dirname, 'image.jpg');
