@@ -234,6 +234,8 @@ let noworder = 0
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.emit('order', order);
+
+    noworder = 0
     
 
     const imagePath = path.join('data/경남과학고/' + order[noworder] + '.jpg');
