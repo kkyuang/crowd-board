@@ -235,16 +235,10 @@ io.on('connection', (socket) => {
     imgDatas = [] 
     
     for(var i = 0; i < Object.keys(areas).length; i++){
-        const imagePath = path.join(__dirname, 'image.jpg');
-        imgDatas[i] = fs.readFileSync(imagePath)
+        const imagePath = path.join('data/경남과학고/' + Object.keys(areas)[i] + '.jpg');
+        imgDatas[i] = Buffer.from(fs.readFileSync(imagePath)).toString('base64');
     }
-
-    fs.readFile(imagePath, (err, data) => {
-        if (err) throw err;
-        const imgData = Buffer.from(data).toString('base64');
-        
-        socket.emit('image', {'img': imgData, 'mapname': '', 'areaId': ''});
-    });
+    socket.emit('image', {'img': imgData, 'mapname': '경남과학고'});
 
     socket.on('result', (data) => {
         console.log('Received result from client:', data);
