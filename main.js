@@ -12,6 +12,10 @@ app.use('/data', express.static(path.join(__dirname, 'data')));
 app.use(express.urlencoded({ extended: true })); // 폼 데이터를 해석하기 위해
 const BASE_DATA_PATH = path.join(__dirname, 'data');
 
+//소켓 통신 관련
+const server = http.createServer(app);
+const io = socketIo(server);
+
 app.use(express.json());
 
 // 폴더가 존재하지 않으면 생성
@@ -40,11 +44,14 @@ const svgstorage = multer.diskStorage({
 const imgstorage = multer.diskStorage({
     destination: (req, file, cb) => {
         const mapId = req.params.mapId;
-        const mapPath = '/'
-        cb(null, mapPath);
+        const mapPath = path.join(BASE_DATA_PATH, mapId);
+        if (!fs.existsSync(mapPath)) {
+            fs.mkdirSync(mapPath, { recursive: true });
+        }
     },
     filename: (req, file, cb) => {
-        cb(null, 'img.jpg');
+        const areaId = req.params.areaId;
+        cb(null, areaId + '.jpg');
     }
 });
 
@@ -201,14 +208,38 @@ app.post('/upload-map/:mapId', svgupload.single('mapFile'), (req, res) => {
 });
 
 
-// 맵 SVG 파일 업로드
-app.post('/crowd-photo/:mapId', imgupload.single('mapFile'), (req, res) => {
+// 군중 사진 파일 업로드
+app.post('/crowd-photo/:mapId/:areaId', imgupload.single('mapFile'), (req, res) => {
     const mapId = req.params.mapId;
+    const areaId = req.params.areaId;
     console.log(res)
     res.send(`맵 SVG 파일이 성공적으로 업로드되었습니다. <a href="/map/${mapId}">맵으로 돌아가기</a>`);
 });
 
+
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    // Read the image file and send it to the client
+    const imagePath = path.join(__dirname, 'image.jpg');
+    fs.readFile(imagePath, (err, data) => {
+        if (err) throw err;
+        const imgData = Buffer.from(data).toString('base64');
+        socket.emit('image', imgData);
+    });
+
+    socket.on('result', (data) => {
+        console.log('Received result from client:', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
+
+
 // 서버 시작
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
