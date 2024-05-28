@@ -23,7 +23,7 @@ function ensureDataFolderExists(folderPath) {
 
 
 // multer 설정
-const storage = multer.diskStorage({
+const svgstorage = multer.diskStorage({
     destination: (req, file, cb) => {
         const mapId = req.params.mapId;
         const mapPath = path.join(BASE_DATA_PATH, mapId);
@@ -36,8 +36,20 @@ const storage = multer.diskStorage({
         cb(null, 'map.svg');
     }
 });
+// multer 설정
+const imgstorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const mapId = req.params.mapId;
+        const mapPath = '/'
+        cb(null, mapPath);
+    },
+    filename: (req, file, cb) => {
+        cb(null, 'img.jpg');
+    }
+});
 
-const upload = multer({ storage: storage });
+const svgupload = multer({ storage: svgstorage });
+const imgupload = multer({ storage: imgstorage });
 
 // 맵 추가 페이지
 app.get('/addmap', (req, res) => {
@@ -46,7 +58,7 @@ app.get('/addmap', (req, res) => {
         <form action="/addmap" method="post">
             <label for="mapName">맵 이름:</label>
             <input type="text" id="mapName" name="mapName" required><br><br>
-            <input type="submit" value="맵 추가">
+            <input type="submit" value="맵 추가">ƒ
         </form>
     `);
 });
@@ -183,11 +195,17 @@ app.get('/crowd-data/:mapId', (req, res) => {
 });
 
 // 맵 SVG 파일 업로드
-app.post('/upload-map/:mapId', upload.single('mapFile'), (req, res) => {
+app.post('/upload-map/:mapId', svgupload.single('mapFile'), (req, res) => {
     const mapId = req.params.mapId;
     res.send(`맵 SVG 파일이 성공적으로 업로드되었습니다. <a href="/map/${mapId}">맵으로 돌아가기</a>`);
 });
 
+
+// 맵 SVG 파일 업로드
+app.post('/crowd-photo/:mapId', imgupload.single('mapFile'), (req, res) => {
+    const mapId = req.params.mapId;
+    res.send(`맵 SVG 파일이 성공적으로 업로드되었습니다. <a href="/map/${mapId}">맵으로 돌아가기</a>`);
+});
 
 // 서버 시작
 app.listen(PORT, () => {
