@@ -235,7 +235,7 @@ io.on('connection', (socket) => {
     order = Object.keys(JSON.parse(fs.readFileSync('data/경남과학고/crowdData.json', 'utf8')));
     noworder = 0
     
-    console.log(order)
+    console.log(fs.readFileSync('data/경남과학고/crowdData.json', 'utf8'))
     socket.emit('order', order);
 
     const imagePath = path.join('data/경남과학고/' + order[noworder] + '.jpg');
