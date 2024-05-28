@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1920 1080">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        fill: #000;
+      }
+
+      .cls-3, .cls-2 {
+        font-family: Hahmlet-ExtraBold, Hahmlet;
+        font-size: 48px;
+        font-weight: 700;
+      }
+
+      .cls-4 {
+        fill: gray;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <g id="_레이어_2" data-name="레이어 2">
+    <rect class="cls-4" x="1444" y="653" width="203" height="336"/>
+    <text class="cls-3" transform="translate(214.58 482.24)"><tspan x="0" y="0">3층 합강 앞</tspan></text>
+    <text class="cls-3" transform="translate(597.58 218.24)"><tspan x="0" y="0">자판기 앞</tspan></text>
+    <text class="cls-3" transform="translate(1074.58 770.24)"><tspan x="0" y="0">급식소 앞</tspan></text>
+    <text class="cls-3" transform="translate(213.58 750.24)"><tspan x="0" y="0">2층 합강 앞</tspan></text>
+    <text class="cls-2" transform="translate(1478.58 842.24)"><tspan x="0" y="0">급식소</tspan></text>
+  </g>
+  <g id="hapgang2">
+    <path class="cls-1" d="M496.5,624.18v134.01c0,65.34,52.97,118.31,118.31,118.31s118.31-52.97,118.31-118.31v-134.01h-236.62Z"/>
+  </g>
+  <g id="hapgang3">
+    <path class="cls-1" d="M496.5,356.17v134.01c0,65.34,52.97,118.31,118.31,118.31s118.31-52.97,118.31-118.31v-134.01h-236.62Z"/>
+  </g>
+  <g id="food02">
+    <rect class="cls-1" x="1322.26" y="316.33" width="91.75" height="263.18"/>
+  </g>
+  <g id="food01">
+    <rect class="cls-1" x="1322.26" y="579.51" width="91.75" height="263.18"/>
+  </g>
+  <g id="vending">
+    <rect class="cls-1" x="836.95" y="128" width="196.78" height="148.49"/>
+  </g>
+</svg>

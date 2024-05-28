@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>경남과학고 - 인구 밀도 알리미</title>
+    <style>
+        #mapContainer {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin: auto;
+        }
+
+        svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .evacuation-path {
+            stroke: black;
+            stroke-width: 4px;
+        }
+
+        .evacuation-path-inner {
+            stroke: green;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>경남과학고 - 인구 밀도 알리미</h1>
+    <a href="/crowd-count/경남과학고"><button>군중 수 입력</button></a>
+    <form action="/upload-map/경남과학고" method="post" enctype="multipart/form-data">
+        <label for="mapFile">SVG 파일 업로드:</label>
+        <input type="file" id="mapFile" name="mapFile" accept=".svg" required><br><br>
+        <input type="submit" value="업로드">
+    </form>
+    <form id="evacuationForm">
+        <h2>대피 경로 추가</h2>
+        <div id="evacuationPathsContainer"></div>
+        <button type="button" onclick="addEvacuationPath()">경로 추가</button>
+        <br><br>
+        <input type="submit" value="대피 경로 저장">
+    </form>
+    <div id="mapContainer">
+    </div>
+    <p>여기에 경남과학고의 세부 사항을 표시합니다.</p>
+    <a href="/">홈으로 돌아가기</a>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMapData()
+            setInterval(() => loadMapData(), 2000);
+
+            document.getElementById('evacuationForm').addEventListener('submit', (event) => {
+                event.preventDefault();
+                saveEvacuationPaths();
+            });
+        });
+
+        function addEvacuationPath() {
+            const container = document.getElementById('evacuationPathsContainer');
+            const pathCount = container.children.length;
+
+            const pathDiv = document.createElement('div');
+            pathDiv.innerHTML = `
+                <h3>경로 ${pathCount + 1}</h3>
+                <label for="area${pathCount}">구역:</label>
+                <input type="text" id="area${pathCount}" name="area${pathCount}" required>
+                <label for="position${pathCount}">위치:</label>
+                <select id="position${pathCount}" name="position${pathCount}">
+                    <option value="center">중앙</option>
+                    <option value="start">시작</option>
+                    <option value="end">끝</option>
+                </select>
+                <br><br>
+            `;
+            container.appendChild(pathDiv);
+        }
+
+        function ToHex(N) { //Hex코드로 변환
+
+            if (N == null) return "00";
+
+            N = parseInt(N);
+
+            if (N == 0 || isNaN(N)) return "00"
+
+            N = Math.max(0, N);
+
+            N = Math.min(N, 255);
+
+            N = Math.round(N);
+
+            return "0123456789ABCDEF".charAt((N - N % 16) / 16) + "0123456789ABCDEF".charAt(N % 16);
+
+        }
+
+        function saveEvacuationPaths() {
+            const paths = [];
+            const container = document.getElementById('evacuationPathsContainer');
+            const pathDivs = container.children;
+
+            for (let i = 0; i < pathDivs.length; i++) {
+                const area = document.getElementById(`area${i}`).value;
+                const position = document.getElementById(`position${i}`).value;
+                paths.push({ area, position });
+            }
+
+            fetch(`/update-evacuation/경남과학고`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ evacuationPaths: [paths] })
+            }).then(response => response.text()).then(data => {
+                alert(data);
+                loadMapData();
+            });
+        }
+
+
+        function loadMapData() {
+            Promise.all([
+                fetch(`/data/경남과학고/crowdData.json`).then(response => response.json()),
+                fetch(`/data/경남과학고/areaData.json`).then(response => response.json()),
+                fetch(`/data/경남과학고/evacuation.json`).then(response => response.json()),
+                fetch(`/data/경남과학고/map.svg`).then(response => response.text())
+            ]).then(([crowdData, areaData, evacuationPaths, svgText]) => {
+                const parser = new DOMParser();
+                const svgDoc = parser.parseFromString(svgText, 'image/svg+xml').documentElement;
+
+                const areas = Object.keys(crowdData);
+                const pathPoints = [];
+                areas.forEach(areaId => {
+                    const area = svgDoc.getElementById(areaId).children[0];
+                    if (area) {
+                        let color;
+                        density = crowdData[areaId] / areaData[areaId]
+                        function RGBtoHex(R, G, B) { //각각 R,G,B코드 입력
+                            var hex_code = ToHex(R) + ToHex(G) + ToHex(B);
+                            return hex_code;
+                        }
+
+                        color = getColorByDensity(density) //'#' + RGBtoHex(density * 256, 256 - 256 * density, 0)
+                        area.setAttribute('fill', color);
+                        area.style.fill = color;
+                    }
+                });
+
+                // 대피 경로 그리기 
+                /*
+                evacuationPaths.forEach(path => {
+                    const points = path.map(point => {
+                        const area = svgDoc.getElementById(point.area);
+                        if (area) {
+                            const bbox = area.getBBox();
+                            let x = bbox.x + bbox.width / 2;
+                            let y = bbox.y + bbox.height / 2;
+
+                            if (point.position === 'start') {
+                                x = bbox.x;
+                                y = bbox.y;
+                            } else if (point.position === 'end') {
+                                x = bbox.x + bbox.width;
+                                y = bbox.y + bbox.height;
+                            }
+
+                            return `${x},${y}`;
+                        }
+                    }).join(' ');
+                })*/
+
+                // 대피 경로 그리기
+                /*const evacuationPath = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+                const evacuationPathInner = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+                const pointsAttr = pathPoints.map(point => `${point.x},${point.y}`).join(' ');
+                evacuationPath.setAttribute('points', pointsAttr);
+                evacuationPath.setAttribute('class', 'evacuation-path');
+                evacuationPathInner.setAttribute('points', pointsAttr);
+                evacuationPathInner.setAttribute('class', 'evacuation-path-inner');
+                svgDoc.appendChild(evacuationPath);
+                svgDoc.appendChild(evacuationPathInner);*/
+
+                // SVG 요소를 SVG 컨테이너에 추가
+                document.getElementById('mapContainer').innerHTML = ''
+                document.getElementById('mapContainer').appendChild(svgDoc);
+            });
+
+        }
+
+        function interpolateColor(color1, color2, factor) {
+            if (arguments.length < 3) {
+                factor = 0.5;
+            }
+            const result = {
+                r: Math.round(color1.r + factor * (color2.r - color1.r)),
+                g: Math.round(color1.g + factor * (color2.g - color1.g)),
+                b: Math.round(color1.b + factor * (color2.b - color1.b))
+            };
+            return result;
+        }
+
+        function getColorByDensity(density) {
+            if (density < 0) density = 0;
+            if (density > 1) density = 1;
+
+            const colors = [
+                { r: 0, g: 0, b: 255 },   // Blue
+                { r: 0, g: 255, b: 0 },   // Green
+                { r: 255, g: 255, b: 0 }, // Yellow
+                { r: 255, g: 0, b: 0 }    // Red
+            ];
+
+            let lowerIndex = Math.floor(density*4);
+            let upperIndex = Math.ceil(density*4);
+            let factor = density - lowerIndex;
+
+            if (upperIndex >= colors.length) {
+                upperIndex = colors.length - 1;
+            }
+
+            const color = interpolateColor(colors[lowerIndex], colors[upperIndex], factor);
+
+            return `rgb(${color.r}, ${color.g}, ${color.b})`;
+        }
+
+    </script>
+</body>
+
+</html>
