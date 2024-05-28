@@ -260,7 +260,7 @@ io.on('connection', (socket) => {
         if(noworder == order.length){
             noworder = 0
         }
-        const imagePath = path.join('data/경남과학고/' + Object.keys(areas)[noworder] + '.jpg');
+        const imagePath = path.join('data/경남과학고/' + order[noworder] + '.jpg');
         imgData = Buffer.from(fs.readFileSync(imagePath)).toString('base64');
         socket.emit('image', imgData);
     });
