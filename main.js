@@ -226,17 +226,16 @@ app.post('/crowd-photo/:mapId/:areaId', imgupload.single('mapFile'), (req, res) 
 });
 
 
-//사진 전송 순서를 설정
-let order = Object.keys(JSON.parse(fs.readFileSync('data/경남과학고/crowdData.json', 'utf8')));
-let noworder = 0
-
 
 io.on('connection', (socket) => {
     console.log('a user connected');
     console.log(order)
     socket.emit('order', order);
 
-    noworder = 0
+
+    //사진 전송 순서를 설정
+    let order = Object.keys(JSON.parse(fs.readFileSync('data/경남과학고/crowdData.json', 'utf8')));
+    let noworder = 0
     
 
     const imagePath = path.join('data/경남과학고/' + order[noworder] + '.jpg');
