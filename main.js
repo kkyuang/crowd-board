@@ -233,6 +233,7 @@ let noworder = 0
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+    console.log(order)
     socket.emit('order', order);
 
     noworder = 0
