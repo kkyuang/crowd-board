@@ -60,12 +60,12 @@ const imgstorage = multer.diskStorage({
     filename: (req, file, cb) => {
         const areaId = req.params.areaId;
         cb(null, areaId + '.jpg');
-    },
-    limits: { fileSize: 10 * 1024 * 1024 } 
+    }
 });
 
 const svgupload = multer({ storage: svgstorage });
-const imgupload = multer({ storage: imgstorage });
+const imgupload = multer({ storage: imgstorage,
+    limits: { fileSize: 50 * 1024 * 1024 }  });
 
 // 맵 추가 페이지
 app.get('/addmap', (req, res) => {
@@ -235,10 +235,10 @@ io.on('connection', (socket) => {
     imgDatas = [] 
     
     for(var i = 0; i < Object.keys(areas).length; i++){
+        const imagePath = path.join(__dirname, 'image.jpg');
         imgDatas[i] = fs.readFileSync(imagePath)
     }
 
-    const imagePath = path.join(__dirname, 'image.jpg');
     fs.readFile(imagePath, (err, data) => {
         if (err) throw err;
         const imgData = Buffer.from(data).toString('base64');
