@@ -226,22 +226,43 @@ app.post('/crowd-photo/:mapId/:areaId', imgupload.single('mapFile'), (req, res) 
 });
 
 
+//사진 전송 순서를 설정
+let order = Object.keys(require('data/경남과학고/crowdData.json'));
+let noworder = 0
+
 
 io.on('connection', (socket) => {
     console.log('a user connected');
-
-    // Read the image file and send it to the client
-    areas = require('data/경남과학고/crowdData.json');
-    imgDatas = [] 
+    socket.emit('order', order);
     
-    for(var i = 0; i < Object.keys(areas).length; i++){
-        const imagePath = path.join('data/경남과학고/' + Object.keys(areas)[i] + '.jpg');
-        imgDatas[i] = Buffer.from(fs.readFileSync(imagePath)).toString('base64');
-    }
-    socket.emit('image', {'img': imgData, 'mapname': '경남과학고'});
+
+    const imagePath = path.join('data/경남과학고/' + order[noworder] + '.jpg');
+    imgData = Buffer.from(fs.readFileSync(imagePath)).toString('base64');
+    socket.emit('image', imgData);
 
     socket.on('result', (data) => {
-        console.log('Received result from client:', data);
+        console.log(data)
+        const folderPath = path.join(BASE_DATA_PATH, '경남과학고');
+        if (!fs.existsSync(folderPath)) {
+            fs.mkdirSync(folderPath, { recursive: true });
+        }
+        const filePath = path.join(folderPath, 'crowdData.json');
+        let crowdData = {};
+        if (fs.existsSync(filePath)) {
+            crowdData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        }
+        crowdData[data.areaId] = data.result;
+        fs.writeFileSync(filePath, JSON.stringify(crowdData, null, 2), 'utf8');
+
+
+        //다음 이미지 전송
+        noworder += 1
+        if(noworder == order.length){
+            noworder = 0
+        }
+        const imagePath = path.join('data/경남과학고/' + Object.keys(areas)[noworder] + '.jpg');
+        imgData = Buffer.from(fs.readFileSync(imagePath)).toString('base64');
+        socket.emit('image', imgData);
     });
 
     socket.on('disconnect', () => {
