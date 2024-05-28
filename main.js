@@ -18,9 +18,15 @@ const BASE_DATA_PATH = path.join(__dirname, 'data');
 const server = http.createServer(app);
 const io = socketIo(server);
 
-app.use(express.json());
+app.use(express.json({
+    limit : "50mb"
+}));
+app.use(express.urlencoded({
+    limit:"50mb",
+    extended: false
+}));
 
-// 폴더가 존재하지 않으면 생성
+
 function ensureDataFolderExists(folderPath) {
     if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath, { recursive: true });
@@ -214,6 +220,7 @@ app.post('/upload-map/:mapId', svgupload.single('mapFile'), (req, res) => {
 app.post('/crowd-photo/:mapId/:areaId', imgupload.single('mapFile'), (req, res) => {
     const mapId = req.params.mapId;
     const areaId = req.params.areaId;
+    console.log(mapId + ' ' + areaId)
     res.send(`맵 SVG 파일이 성공적으로 업로드되었습니다. <a href="/map/${mapId}">맵으로 돌아가기</a>`);
 });
 
@@ -224,9 +231,10 @@ io.on('connection', (socket) => {
 
     // Read the image file and send it to the client
     areas = require('data/경남과학고/crowdData.json');
+    //imgDatas = [] Buffer.from(data).toString('base64');
     
     for(var i = 0; i < Object.keys(areas).length; i++){
-
+        
     }
 
     const imagePath = path.join(__dirname, 'image.jpg');
