@@ -2,11 +2,13 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const bodyParser = require('body-parser');
 const http = require('http');
 const socketIo = require('socket.io');
 const multer = require('multer');
 const app = express();
 const PORT = process.env.PORT || 8080;
+
 
 // 데이터 파일을 저장할 기본 폴더
 app.use(express.static('maps')); // 정적 파일 제공
