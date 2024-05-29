@@ -35,7 +35,7 @@
     <a href="/crowd-count/경남과학고"><button>군중 수 입력</button></a>
     <form action="/upload-map/경남과학고" method="post" enctype="multipart/form-data">
         <label for="mapFile">SVG 파일 업로드:</label>
-        <input type="file" id="mapFile" name="mapFile" accept=".svg" required><br><br>
+        <input type="file" id="image" name="image" accept=".jpg" required><br><br>
         <input type="submit" value="업로드">
     </form>
     <form id="evacuationForm">
@@ -130,7 +130,7 @@
                 fetch(`/data/경남과학고/map.svg`).then(response => response.text())
             ]).then(([crowdData, areaData, evacuationPaths, svgText]) => {
                 const parser = new DOMParser();
-                const svgDoc = parser.parseFromString(svgText, 'image/svg+xml').documentElement;
+                const svgDoc = parser.parseFromString(svgText, 'image/svg+xmlß').documentElement;
 
                 const areas = Object.keys(crowdData);
                 const pathPoints = [];
