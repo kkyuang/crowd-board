@@ -218,7 +218,7 @@ app.post('/upload-map/:mapId', svgupload.single('mapFile'), (req, res) => {
 
 
 // 군중 사진 파일 업로드
-app.post('/crowd-photo/:mapId/:areaId', imgupload.single('mapFile'), (req, res) => {
+app.post('/crowd-photo/:mapId/:areaId', imgupload.single('image'), (req, res) => {
     const mapId = req.params.mapId;
     const areaId = req.params.areaId;
     console.log(mapId + ' ' + areaId)
