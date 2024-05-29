@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const socketIo = require('socket.io');
 const multer = require('multer');
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -15,6 +16,7 @@ app.use(express.static('maps')); // 정적 파일 제공
 app.use('/data', express.static(path.join(__dirname, 'data')));
 app.use(express.urlencoded({ extended: true })); // 폼 데이터를 해석하기 위해
 const BASE_DATA_PATH = path.join(__dirname, 'data');
+app.use(cors());
 
 //소켓 통신 관련
 const server = http.createServer(app);
