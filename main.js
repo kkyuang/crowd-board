@@ -25,6 +25,7 @@ app.use(express.urlencoded({
     limit:"50mb",
     extended: false
 }));
+app.use(bodyParser.json({ limit: '50mb' }));
 
 
 function ensureDataFolderExists(folderPath) {
@@ -218,14 +219,37 @@ app.post('/upload-map/:mapId', svgupload.single('mapFile'), (req, res) => {
 
 
 // 군중 사진 파일 업로드
+/*
 app.post('/crowd-photo/:mapId/:areaId', imgupload.single('image'), (req, res) => {
     const mapId = req.params.mapId;
     const areaId = req.params.areaId;
     console.log(mapId + ' ' + areaId)
     res.send(`맵 SVG 파일이 성공적으로 업로드되었습니다. <a href="/map/${mapId}">맵으로 돌아가기</a>`);
 });
+*/
 
 
+// 군중 사진 파일 업로드
+app.post('/crowd-photo/:mapId/:areaId', (req, res) => {
+    const mapId = req.params.mapId;
+    const areaId = req.params.areaId;
+    console.log(mapId + ' ' + areaId)
+
+    const { name, file } = req.body;
+    const filePath = path.join(__dirname, 'data/' + mapId + '/' + areaId + '.jpg');
+
+    // Base64 데이터를 디코딩하여 파일로 저장
+    const buffer = Buffer.from(file, 'base64');
+    fs.writeFile(filePath, buffer, (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'File Upload Failed' });
+      }
+      res.status(200).json({ message: 'File Uploaded Successfully' });
+    });
+
+    res.send(`군중 이미지 파일이 성공적으로 업로드되었습니다. <a href="/map/${mapId}">맵으로 돌아가기</a>`);
+});
 
 io.on('connection', (socket) => {
     console.log('a user connected');
