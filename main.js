@@ -251,8 +251,6 @@ app.post('/crowd-photo/:mapId/:areaId', (req, res) => {
       }
       res.status(200).json({ message: 'File Uploaded Successfully' });
     });
-
-    res.send(`군중 이미지 파일이 성공적으로 업로드되었습니다. <a href="/map/${mapId}">맵으로 돌아가기</a>`);
 });
 
 io.on('connection', (socket) => {
