@@ -130,7 +130,7 @@
                 fetch(`/data/경남과학고/map.svg`).then(response => response.text())
             ]).then(([crowdData, areaData, evacuationPaths, svgText]) => {
                 const parser = new DOMParser();
-                const svgDoc = parser.parseFromString(svgText, 'image/svg+xmlß').documentElement;
+                const svgDoc = parser.parseFromString(svgText, 'image/svg+xml').documentElement;
 
                 const areas = Object.keys(crowdData);
                 const pathPoints = [];
