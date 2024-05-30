@@ -39,16 +39,31 @@
   <g id="hapgang2">
     <path class="cls-1" d="M496.5,624.18v134.01c0,65.34,52.97,118.31,118.31,118.31s118.31-52.97,118.31-118.31v-134.01h-236.62Z"/>
   </g>
+  <g id="hapgang2text">
+    <text class="cls-3" transform="translate(573.93 753.79)"><tspan x="0" y="0">0명</tspan></text>
+  </g>
   <g id="hapgang3">
     <path class="cls-1" d="M496.5,356.17v134.01c0,65.34,52.97,118.31,118.31,118.31s118.31-52.97,118.31-118.31v-134.01h-236.62Z"/>
+  </g>
+  <g id="hapgang3text">
+    <text class="cls-3" transform="translate(573.93 489.79)"><tspan x="0" y="0">0명</tspan></text>
   </g>
   <g id="food02">
     <rect class="cls-1" x="1322.26" y="316.33" width="91.75" height="263.18"/>
   </g>
+  <g id="food02text">
+    <text class="cls-3" transform="translate(1326.93 465.79)"><tspan x="0" y="0">0명</tspan></text>
+  </g>
   <g id="food01">
     <rect class="cls-1" x="1322.26" y="579.51" width="91.75" height="263.18"/>
   </g>
+  <g id="food01text">
+    <text class="cls-3" transform="translate(1326.93 729.79)"><tspan x="0" y="0">0명</tspan></text>
+  </g>
   <g id="vending">
     <rect class="cls-1" x="836.95" y="128" width="196.78" height="148.49"/>
+  </g>
+  <g id="vendingtext">
+    <text class="cls-3" transform="translate(894.93 220.79)"><tspan x="0" y="0">0명</tspan></text>
   </g>
 </svg>

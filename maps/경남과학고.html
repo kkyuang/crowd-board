@@ -146,8 +146,9 @@
                         
                         color = getColorByDensity(density) //'#' + RGBtoHex(density * 256, 256 - 256 * density, 0)
                         area.setAttribute('fill', color);
-                        area.parentElement.innerHTML += "<text>" + crowdData[areaId] + '명</text>'
                         area.style.fill = color;
+
+                        svgDoc.getElementById(areaId + 'text').children[0].children[0].innerHTML = "<text>" + crowdData[areaId] + '명</text>'
                     }
                 });
 
