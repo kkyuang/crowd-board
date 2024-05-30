@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Capture and Send</title>
+    <input type="text" placeholder="areaId" id="areaId">
+    <button onclick="startCapture()">촬영 시작</button>
+</head>
+<body>
+    <h1>Auto Capture and Send</h1>
+    <video id="video" width="320" height="240" autoplay></video>
+    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+
+        // Access webcam
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+                video.srcObject = stream;
+                video.play();
+            });
+        }
+
+        // Capture photo and send to server
+        function captureAndSend() {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL('image/png');
+            const base64Image = dataURL.split(',')[1];
+
+            // Replace 'YOUR_SERVER_URL' with your actual server URL
+            fetch('http://43.203.242.122:8080/crowd-photo/경남과학고/' + document.getElementById('areaId').value, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ file: base64Image }),
+            })
+            .then(response => response.json())
+            .then(data => console.log('Success:', data))
+            .catch(error => console.error('Error:', error));
+        }
+
+        function startCapture(){
+        // Capture and send every 5 seconds
+        setInterval(captureAndSend, 5000);
+        }
+    </script>
+</body>
+</html>

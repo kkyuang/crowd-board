@@ -131,6 +131,7 @@ app.get('/', (req, res) => {
     const maps = fs.readdirSync(BASE_DATA_PATH).filter(file => fs.statSync(path.join(BASE_DATA_PATH, file)).isDirectory());
     let html = '<h1>인구 밀도 알리미</h1>';
     html += '<a href="/addmap"><button>맵 추가</button></a><br><br>';
+    html += `<p><a href="/photo">군중 사진 촬영하기</a></p>`;
     maps.forEach(map => {
         html += `<p><a href="/map/${map}">${map}</a></p>`;
     });
@@ -143,6 +144,12 @@ app.get('/map/:mapId', (req, res) => {
     const mapId = req.params.mapId;
     // 맵 파일이 있다고 가정하고 링크 제공 (실제 파일 경로는 적절히 설정해야 함)
     res.sendFile(path.join(__dirname, 'maps', `${mapId}.html`));
+});
+
+// 사진 촬영 페이지
+app.get('/photo', (req, res) => {
+    // 맵 파일이 있다고 가정하고 링크 제공 (실제 파일 경로는 적절히 설정해야 함)
+    res.sendFile(path.join(__dirname, 'html', `takepicture.html`));
 });
 
 // 군중 데이터 입력 페이지
