@@ -146,6 +146,7 @@
                         
                         color = getColorByDensity(density) //'#' + RGBtoHex(density * 256, 256 - 256 * density, 0)
                         area.setAttribute('fill', color);
+                        area.innerHTML = crowdData[areaId] + '명'
                         area.style.fill = color;
                     }
                 });
