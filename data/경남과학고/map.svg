@@ -29,41 +29,42 @@
     </style>
   </defs>
   <g id="_레이어_2" data-name="레이어 2">
-    <rect class="cls-4" x="1444" y="653" width="203" height="336"/>
-    <text class="cls-3" transform="translate(214.58 482.24)"><tspan x="0" y="0">3층 합강 앞</tspan></text>
-    <text class="cls-3" transform="translate(597.58 218.24)"><tspan x="0" y="0">자판기 앞</tspan></text>
-    <text class="cls-3" transform="translate(1074.58 770.24)"><tspan x="0" y="0">급식소 앞</tspan></text>
-    <text class="cls-3" transform="translate(213.58 750.24)"><tspan x="0" y="0">2층 합강 앞</tspan></text>
-    <text class="cls-2" transform="translate(1478.58 842.24)"><tspan x="0" y="0">급식소</tspan></text>
+    <rect class="cls-4" x="1486" y="552" width="203" height="366"/>
+    <text class="cls-3" transform="translate(435.58 524.24)"><tspan x="0" y="0">3층 합강 앞</tspan></text>
+    <text class="cls-3" transform="translate(195.39 252.24)"><tspan x="0" y="0">중앙 정원</tspan></text>
+    <text class="cls-3" transform="translate(835.39 252.24)"><tspan x="0" y="0">자판기 앞</tspan></text>
+    <text class="cls-3" transform="translate(1116.58 699.24)"><tspan x="0" y="0">급식소 앞</tspan></text>
+    <text class="cls-3" transform="translate(434.58 792.24)"><tspan x="0" y="0">2층 합강 앞</tspan></text>
+    <text class="cls-2" transform="translate(1521.58 753.24)"><tspan x="0" y="0">급식소</tspan></text>
   </g>
   <g id="hapgang2">
-    <path class="cls-1" d="M496.5,624.18v134.01c0,65.34,52.97,118.31,118.31,118.31s118.31-52.97,118.31-118.31v-134.01h-236.62Z"/>
+    <path class="cls-1" d="M717.5,666.18v134.01c0,65.34,52.97,118.31,118.31,118.31s118.31-52.97,118.31-118.31v-134.01h-236.62Z"/>
   </g>
   <g id="hapgang2text">
-    <text class="cls-3" transform="translate(573.93 753.79)"><tspan x="0" y="0">0명</tspan></text>
+    <text class="cls-3" transform="translate(794.93 795.79)"><tspan x="0" y="0">0명</tspan></text>
   </g>
   <g id="hapgang3">
-    <path class="cls-1" d="M496.5,356.17v134.01c0,65.34,52.97,118.31,118.31,118.31s118.31-52.97,118.31-118.31v-134.01h-236.62Z"/>
+    <path class="cls-1" d="M717.5,398.17v134.01c0,65.34,52.97,118.31,118.31,118.31s118.31-52.97,118.31-118.31v-134.01h-236.62Z"/>
   </g>
   <g id="hapgang3text">
-    <text class="cls-3" transform="translate(573.93 489.79)"><tspan x="0" y="0">0명</tspan></text>
+    <text class="cls-3" transform="translate(794.93 531.79)"><tspan x="0" y="0">0명</tspan></text>
   </g>
   <g id="food02">
-    <rect class="cls-1" x="1322.26" y="316.33" width="91.75" height="263.18"/>
+    <rect class="cls-1" x="1364.26" y="552.33" width="91.75" height="263.18"/>
   </g>
   <g id="food02text">
-    <text class="cls-3" transform="translate(1326.93 465.79)"><tspan x="0" y="0">0명</tspan></text>
+    <text class="cls-3" transform="translate(1368.93 701.79)"><tspan x="0" y="0">0명</tspan></text>
   </g>
   <g id="food01">
-    <rect class="cls-1" x="1322.26" y="579.51" width="91.75" height="263.18"/>
+    <rect class="cls-1" x="1061.29" y="161.79" width="196.78" height="148.49"/>
   </g>
   <g id="food01text">
-    <text class="cls-3" transform="translate(1326.93 729.79)"><tspan x="0" y="0">0명</tspan></text>
+    <text class="cls-3" transform="translate(1118.93 254.79)"><tspan x="0" y="0">0명</tspan></text>
   </g>
   <g id="vending">
-    <rect class="cls-1" x="836.95" y="128" width="196.78" height="148.49"/>
+    <rect class="cls-1" x="428.95" y="162" width="196.78" height="148.49"/>
   </g>
   <g id="vendingtext">
-    <text class="cls-3" transform="translate(894.93 220.79)"><tspan x="0" y="0">0명</tspan></text>
+    <text class="cls-3" transform="translate(486.93 254.79)"><tspan x="0" y="0">0명</tspan></text>
   </g>
 </svg>
