@@ -52,7 +52,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             loadMapData()
-            setInterval(() => loadMapData(), 200000);
+            setInterval(() => loadMapData(), 2000);
 
             document.getElementById('evacuationForm').addEventListener('submit', (event) => {
                 event.preventDefault();
@@ -138,7 +138,7 @@
                     const area = svgDoc.getElementById(areaId).children[0];
                     if (area) {
                         let color;
-                        density = crowdData[areaId] / areaData[areaId]
+                        density = 5 * crowdData[areaId] / areaData[areaId]
                         function RGBtoHex(R, G, B) { //각각 R,G,B코드 입력
                             var hex_code = ToHex(R) + ToHex(G) + ToHex(B);
                             return hex_code;
