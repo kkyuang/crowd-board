@@ -62,9 +62,9 @@
     <text class="cls-3" transform="translate(207.93 659.79)"><tspan x="0" y="0">0명</tspan></text>
   </g>
   <g id="vending">
-    <rect class="cls-1" x="438.95" y="162" width="196.78" height="148.49"/>
+    <rect class="cls-1" x="438.95" y="131" width="354.05" height="219.49"/>
   </g>
   <g id="vendingtext">
-    <text class="cls-3" transform="translate(496.93 254.79)"><tspan x="0" y="0">0명</tspan></text>
+    <text class="cls-3" transform="translate(584.93 259.79)"><tspan x="0" y="0">0명</tspan></text>
   </g>
 </svg>
