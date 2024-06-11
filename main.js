@@ -265,19 +265,19 @@ io.on('connection', (socket) => {
 
 
     //사진 전송 순서를 설정
-    order = Object.keys(JSON.parse(fs.readFileSync('data/경남과학고/crowdData.json', 'utf8')));
+    order = Object.keys(JSON.parse(fs.readFileSync('data/gym/crowdData.json', 'utf8')));
     noworder = 0
     
-    console.log(fs.readFileSync('data/경남과학고/crowdData.json', 'utf8'))
+    console.log(fs.readFileSync('data/gym/crowdData.json', 'utf8'))
     socket.emit('order', order);
 
-    const imagePath = path.join('data/경남과학고/' + order[noworder] + '.jpg');
+    const imagePath = path.join('data/gym/' + order[noworder] + '.jpg');
     imgData = Buffer.from(fs.readFileSync(imagePath)).toString('base64');
     socket.emit('image', imgData);
 
     socket.on('result', (data) => {
         console.log(data)
-        const folderPath = path.join(BASE_DATA_PATH, '경남과학고');
+        const folderPath = path.join(BASE_DATA_PATH, 'gym');
         if (!fs.existsSync(folderPath)) {
             fs.mkdirSync(folderPath, { recursive: true });
         }
@@ -295,7 +295,7 @@ io.on('connection', (socket) => {
         if(noworder == order.length){
             noworder = 0
         }
-        const imagePath = path.join('data/경남과학고/' + order[noworder] + '.jpg');
+        const imagePath = path.join('data/gym/' + order[noworder] + '.jpg');
         imgData = Buffer.from(fs.readFileSync(imagePath)).toString('base64');
         socket.emit('image', imgData);
     });
